@@ -7,9 +7,9 @@ const fs = require('fs');
 require("dotenv").config();
 const { URLSearchParams } = require('url');
 
-const PI_API_SERVER = 'https://api-mainnet.vercel.app';
+const PI_API_SERVER = 'https://api.mainnet.minepi.com';
 const PI_NETWORK_PASSPHRASE = 'Pi Network';
-const DELAY_BETWEEN_WALLETS_MS = 1000; // jeda 1 detik saja agar gak time mojrot wkw
+const DELAY_BETWEEN_WALLETS_MS = 1; // jeda 1 detik saja agar gak time mojrot wkw
 const server = new StellarSdk.Server(PI_API_SERVER);
 
 async function sendTelegramNotification(message) {
@@ -52,7 +52,7 @@ async function submitTransaction(xdr) {
     try {
         const response = await axios.post(`${PI_API_SERVER}/transactions`, new URLSearchParams({ tx: xdr }), {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            timeout: 10000
+            timeout: 30000
         });
         if (response.data.status === 'ERROR') throw new Error(response.data.detail);
         return response.data;
